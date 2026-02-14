@@ -192,4 +192,4 @@ supabase-setup.sql    — Database setup script
 
 ---
 
-Built with ❤️ using Next.js + Supabase
+Built Next.js + Supabase
