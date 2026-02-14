@@ -140,19 +140,30 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ---
 
-## 🧩 Challenges Faced
+## 🧩 Challenges Faced & Solutions
 
-### 1. Supabase Auth in Next.js App Router
-The App Router uses server components by default, which can't access browser cookies directly. I used `@supabase/ssr` to create separate browser and server clients that handle cookies correctly, plus middleware to refresh sessions on every request.
+### 1. Realtime Deletions with RLS
+**Problem**: Deleting a bookmark didn't reflect in real-time for other tabs.
+**Root Cause**: Postgres `DELETE` events don't send the old record by default, so RLS policies couldn't verify ownership, blocking the broadcast.
+**Solution**: Enabled `REPLICA IDENTITY FULL` on the bookmarks table (`alter table public.bookmarks replica identity full;`). This forces Postgres to send the entire old record during deletions, allowing RLS to verify `user_id` and permit the realtime event.
 
-### 2. Realtime Subscription Lifecycle
-The Realtime channel must be subscribed when the user is authenticated and cleaned up on unmount to avoid memory leaks. Using `useEffect` with a cleanup function (`supabase.removeChannel`) ensures proper lifecycle management.
+### 2. Mobile Responsiveness for Inline Editing
+**Problem**: The "Edit" form broke the layout on mobile devices, pushing buttons off-screen.
+**Solution**: Implemented a responsive Flexbox layout. On desktop (`sm:`), inputs and buttons stay in a single row. On mobile, they stack vertically (Title top, URL bottom) with buttons aligned for easy touch access.
 
-### 3. Row-Level Security + Realtime Filter
-RLS policies must align with the Realtime filter. The `filter: user_id=eq.${user.id}` ensures the client only receives events for the current user's data, and RLS ensures the database never leaks data even if the filter is bypassed.
+### 3. Supabase Auth in Production
+**Problem**: After deploying to Vercel, logging in redirected users back to `localhost`.
+**Solution**: Configured dynamic redirect URLs. In development, it uses `localhost`. In production, it uses the Vercel deployment URL. Also updated Supabase Dashboard "Site URL" and "Redirect URLs" to whitelist the production domain.
 
-### 4. OAuth Redirect Flow
-The OAuth flow requires a callback route (`/auth/callback`) that exchanges the authorization code for a session. Getting the redirect URLs right between local development and production (Vercel) requires updating both Google Cloud Console and Supabase settings.
+### 4. Row-Level Security (RLS) policies
+**Problem**: Initial updates failed with "new row violates row-level security policy".
+**Solution**: The database was missing a specific `UPDATE` policy. I wrote a migration to add:
+```sql
+create policy "Users can update their own bookmarks"
+  on public.bookmarks for update
+  using (auth.uid() = user_id);
+```
+This ensures users can only modify their own data.
 
 ---
 
