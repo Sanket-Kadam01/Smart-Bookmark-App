@@ -2,7 +2,7 @@
 
 A real-time bookmark manager built with **Next.js (App Router)**, **Supabase**, and **Tailwind CSS**. Users sign in with Google OAuth, save bookmarks privately, and see changes sync across browser tabs in real time.
 
-**Live Demo**: _[Add your Vercel URL here]_
+**Live Demo**: https://smart-bookmark-app-eosin-xi.vercel.app/login
 
 ---
 
@@ -10,7 +10,7 @@ A real-time bookmark manager built with **Next.js (App Router)**, **Supabase**, 
 
 - **Google OAuth Login** — One-click sign in via Supabase Auth
 - **Private Bookmarks** — Each user only sees their own data (enforced by Row-Level Security)
-- **Add & Delete** — Simple CRUD with instant feedback
+- **Add, Delete & update** — Simple CRUD with instant feedback
 - **Real-Time Sync** — Open two tabs → changes in one appear in the other instantly
 - **Responsive UI** — Clean dark theme with Tailwind CSS
 
