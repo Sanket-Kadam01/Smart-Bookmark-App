@@ -120,12 +120,12 @@ export default function BookmarkList({ bookmarks, onBookmarkDeleted }: BookmarkL
                     className="group flex items-center justify-between p-4 bg-gray-800/30 hover:bg-gray-800/50 border border-gray-700/30 hover:border-gray-700/50 rounded-xl transition-all duration-200"
                 >
                     {editingId === bookmark.id ? (
-                        <div className="flex-1 flex gap-2 w-full">
+                        <div className="flex-1 flex flex-col sm:flex-row gap-3 w-full">
                             <input
                                 type="text"
                                 value={editTitle}
                                 onChange={(e) => setEditTitle(e.target.value)}
-                                className="flex-1 px-3 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white text-sm focus:outline-none focus:border-indigo-500"
+                                className="w-full sm:flex-1 px-3 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white text-sm focus:outline-none focus:border-indigo-500"
                                 placeholder="Title"
                                 autoFocus
                             />
@@ -133,28 +133,30 @@ export default function BookmarkList({ bookmarks, onBookmarkDeleted }: BookmarkL
                                 type="text"
                                 value={editUrl}
                                 onChange={(e) => setEditUrl(e.target.value)}
-                                className="flex-1 px-3 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white text-sm focus:outline-none focus:border-indigo-500"
+                                className="w-full sm:flex-1 px-3 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white text-sm focus:outline-none focus:border-indigo-500"
                                 placeholder="URL"
                             />
-                            <button
-                                onClick={handleUpdate}
-                                disabled={updating}
-                                className="p-2 text-green-400 hover:bg-green-500/10 rounded-lg"
-                                title="Save"
-                            >
-                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                                </svg>
-                            </button>
-                            <button
-                                onClick={cancelEditing}
-                                className="p-2 text-gray-400 hover:bg-gray-500/10 rounded-lg"
-                                title="Cancel"
-                            >
-                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                </svg>
-                            </button>
+                            <div className="flex gap-2 justify-end sm:justify-start">
+                                <button
+                                    onClick={handleUpdate}
+                                    disabled={updating}
+                                    className="p-2 text-green-400 hover:bg-green-500/10 rounded-lg transition-colors"
+                                    title="Save"
+                                >
+                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                    </svg>
+                                </button>
+                                <button
+                                    onClick={cancelEditing}
+                                    className="p-2 text-gray-400 hover:bg-gray-500/10 rounded-lg transition-colors"
+                                    title="Cancel"
+                                >
+                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
                     ) : (
                         <>
