@@ -182,7 +182,7 @@ export default function BookmarkList({ bookmarks, onBookmarkDeleted }: BookmarkL
                             <div className="flex items-center gap-1">
                                 <button
                                     onClick={() => startEditing(bookmark)}
-                                    className="p-2 text-gray-500 hover:text-indigo-400 hover:bg-indigo-500/10 rounded-lg transition-all duration-200 opacity-0 group-hover:opacity-100 cursor-pointer"
+                                    className="p-2 text-gray-500 hover:text-indigo-400 hover:bg-indigo-500/10 rounded-lg transition-all duration-200 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 cursor-pointer"
                                     title="Edit bookmark"
                                 >
                                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -192,7 +192,7 @@ export default function BookmarkList({ bookmarks, onBookmarkDeleted }: BookmarkL
                                 <button
                                     onClick={() => handleDelete(bookmark.id)}
                                     disabled={deletingId === bookmark.id}
-                                    className="p-2 text-gray-500 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-all duration-200 opacity-0 group-hover:opacity-100 disabled:opacity-50 cursor-pointer"
+                                    className="p-2 text-gray-500 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-all duration-200 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 disabled:opacity-50 cursor-pointer"
                                     title="Delete bookmark"
                                 >
                                     {deletingId === bookmark.id ? (
