@@ -1,11 +1,27 @@
 "use client";
 
 import { createClient } from "@/lib/supabaseClient";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function LoginPage() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        // Reset loading when the page is shown (including when coming back via back/forward cache)
+        setLoading(false);
+
+        const onPageShow = () => setLoading(false);
+        const onPopState = () => setLoading(false);
+
+        window.addEventListener("pageshow", onPageShow);
+        window.addEventListener("popstate", onPopState);
+
+        return () => {
+            window.removeEventListener("pageshow", onPageShow);
+            window.removeEventListener("popstate", onPopState);
+        };
+    }, []);
 
     const handleGoogleLogin = async () => {
         setLoading(true);
