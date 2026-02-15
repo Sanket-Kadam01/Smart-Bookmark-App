@@ -29,6 +29,14 @@ export default function BookmarkForm({ userId, onBookmarkAdded }: BookmarkFormPr
             formattedUrl = `https://${formattedUrl}`;
         }
 
+        // Validate that the URL has a TLD (e.g., .com, .org, .net)
+        const urlWithTldPattern = /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{2,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/;
+        if (!urlWithTldPattern.test(formattedUrl)) {
+            setError("Please enter a valid website URL with a domain extension (e.g., .com, .org)");
+            setLoading(false);
+            return;
+        }
+
         const { error: insertError } = await supabase.from("bookmarks").insert({
             title: title.trim(),
             url: formattedUrl,
